@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Logo Parser</title>
+
+	<meta name="description" content="Source code generated using layoutit.com">
+	<meta name="author" content="LayoutIt!">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<label for="linkInput">
+					Logo Parser
+				</label>
+
+				<br>
+				<br>
+
+
+				<form role="form">
+					<div class="form-group">
+
+						<label for="linkInput">
+							Enter Link to parse for Logos
+						</label>
+						<input id="link" class="form-control">
+						
+						<br>
+						<br>
+
+						<br>
+						<br>
+						<label for="scores">Choose minimum Logo Detection Accuracy (Out of 100)</label>
+						<select id="scores" name="cars">
+							<option value="0.99" selected>99</option>
+							<option value="0.90">90</option>
+							<option value="0.80">80</option>
+							<option value="0.70">70</option>
+						</select>
+					</div>
+					<br>
+					<br>
+					<button id="testLink1" class="btn btn-primary">
+						Test Link 1
+					</button>
+					<button id="testLink2" class="btn btn-primary">
+						Test Link 2
+					</button>
+					<button id="testLink3" class="btn btn-primary">
+						Test Link 3
+					</button>
+					<button id="testLink4" class="btn btn-primary">
+						Test Link 4
+					</button>
+
+					<br>
+					<br>
+
+					<button id="input" type="submit" class="btn btn-primary">
+						Submit
+					</button>
+
+
+
+					<br>
+					<br>
+					<label id="loading"></label>
+				</form>
+				<br>
+				<br>
+				<div class="list-group">
+					<a href="#" class="list-group-item list-group-item-action active">Logos</a>
+
+					<div class="list-group-item">
+						<ul class="logos">
+
+						</ul>
+					</div>
+
+				</div>
+				<br>
+				<br>
+				<div class="list-group">
+					<a href="#" class="list-group-item list-group-item-action active">Possible Logs</a>
+
+					<div class="list-group-item">
+						<ul class="possLogos">
+
+						</ul>
+					</div>
+
+				</div>
+
+				<br>
+				<br>
+				<div class="list-group">
+					<a href="#" class="list-group-item list-group-item-action active">Images</a>
+
+					<div class="list-group-item">
+						<ul class="results">
+
+						</ul>
+					</div>
+
+				</div>
+
+				<br>
+				<br>
+
+
+
+
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<script>
+		var resultList = document.querySelector('ul.results');
+		var logoList = document.querySelector('ul.logos');
+		var possLogoList = document.querySelector('ul.possLogos');
+		var urlInput = document.getElementById('link');
+		var loadingText = document.getElementById('loading');
+		apiCallBack = function (xhr, callback) {
+			if (xhr.readyState == XMLHttpRequest.DONE) {
+				if (xhr.status != 200) {
+					let message = xhr.status + ":" + xhr.statusText + ":"
+						+ xhr.responseText;
+					alert(message);
+					throw 'API call returned bad code: ' + xhr.status;
+				}
+				let response = xhr.responseText ? JSON.parse(xhr.responseText)
+					: null;
+				if (callback) {
+					callback(response);
+				}
+			}
+		}
+
+		updateList = function (response) {
+			console.log(response);
+			const obj = response;
+			resultList.innerHTML = '';
+			console.log(obj);
+
+			for (var url in obj["images"]) {
+				console.log("URL: " + url);
+				var img = document.createElement("img");
+				img.width = 100;
+				img.height = 100;
+				img.src = obj["images"][url].url;
+				resultList.appendChild(img);
+			}
+
+			updateLogoList(response);
+			updatePossLogoList(response);
+
+		}
+
+		updatePossLogoList = function (response) {
+			console.log('POSS LOGOS');
+			console.log(response);
+			const obj = response;
+			possLogoList.innerHTML = '';
+			table = document.createElement('table'),
+				tbody = table.appendChild(document.createElement('tbody'));
+			for (var url in obj["possLogos"]) {
+				tr = document.createElement('tr');
+
+
+				var img = document.createElement("img");
+				img.width = 100;
+				img.height = 100;
+				img.src = obj["possLogos"][url].url;
+				tr.appendChild(img);
+
+				var label = document.createElement("td");
+
+				label.innerHTML = obj["possLogos"][url].brand;
+				tr.appendChild(label);
+				tbody.appendChild(tr);
+			}
+			possLogoList.appendChild(table);
+			loadingText.innerHTML = ' '
+		}
+		updateLogoList = function (response) {
+			console.log('LOGOS');
+			console.log(response);
+			const obj = response;
+			logoList.innerHTML = '';
+			table = document.createElement('table'),
+				tbody = table.appendChild(document.createElement('tbody'));
+			for (var url in obj["logos"]) {
+				tr = document.createElement('tr');
+
+
+				var img = document.createElement("img");
+				img.width = 100;
+				img.height = 100;
+				img.src = obj["logos"][url].url;
+				tr.appendChild(img);
+
+				var label = document.createElement("td");
+
+				label.innerHTML = obj["logos"][url].brand;
+				tr.appendChild(label);
+				tbody.appendChild(tr);
+			}
+			logoList.appendChild(table);
+
+
+
+
+		}
+
+
+
+		makeApiCall = async function (url, method, obj, callback) {
+			let xhr = new XMLHttpRequest();
+			xhr.open(method, url);
+			xhr.onreadystatechange = apiCallBack.bind(null, xhr, callback);
+			xhr.send(obj ? obj instanceof FormData || obj.constructor == String ? obj : JSON.stringify(obj) : null);
+		}
+
+		document.getElementById('testLink1').addEventListener("click", function (event) {
+			event.preventDefault();
+			urlInput.value = 'https://www.espn.com/nfl/story/_/id/33044264/new-york-giants-fire-coach-joe-judge-just-two-seasons';
+
+			
+		});
+		document.getElementById('testLink4').addEventListener("click", function (event) {
+			event.preventDefault();
+			urlInput.value = 'https://www.sportingnews.com/us/nfl/news/why-did-giants-fire-joe-judge/q6hdum0qwfds1xxpzrgo8fcxh';
+
+			
+		});
+		document.getElementById('testLink3').addEventListener("click", function (event) {
+			event.preventDefault();
+			urlInput.value = 'https://stackoverflow.com/questions/11198409/array-of-images-into-tab';
+
+			
+		});
+		document.getElementById('testLink2').addEventListener("click", function (event) {
+			event.preventDefault();
+			urlInput.value = 'https://www.javatpoint.com/java-tutorial';
+
+			
+		});
+
+		document.getElementById('input').addEventListener("click", function (event) {
+			event.preventDefault();
+			if (urlInput.value == " ") {
+				return;
+			}
+			var logoDetectAc = document.getElementById("scores");
+			var score = logoDetectAc.options[logoDetectAc.selectedIndex].value;
+			loadingText.innerHTML = 'LOADING...'
+			makeApiCall('/main?url=' + urlInput.value + '&score=' + score, 'POST', null, updateList);
+			//makeApiCall('/main', 'GET', urlInput, updateLogoList);
+
+		});
+	</script>
+</body>
+
+</html>
