@@ -1,11 +1,11 @@
 ## Overview
- This application is decied to accept a url for a webpage and 
+ This application is designed to accept a url for a webpage and 
  rawl the webpage for images, logos, and images that have a 
  possiblity of being logos.
 
 ## Stack
 
-For the application, I used a variaty of tools.
+For the application, I used a variety of tools.
 
 For logo detection, I used Google's Cloud Vision API, a Machine Learing API,
  to see if an image is a logo, and to identify the brand the logo represents.
