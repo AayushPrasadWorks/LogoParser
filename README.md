@@ -1,29 +1,26 @@
 ## Overview
  This application is designed to accept a url for a webpage and 
- rawl the webpage for images, logos, and images that have a 
+ crawl the webpage for images, logos, and images that have a 
  possiblity of being logos.
 
-## Stack
+## Stack:
 
-For the application, I used a variety of tools.
+Google's Cloud Vision API, a Machine Learing API, For Logo Detection
 
-For logo detection, I used Google's Cloud Vision API, a Machine Learing API,
- to see if an image is a logo, and to identify the brand the logo represents.
+Jsoup to crawl through webpages for images and their source links.
 
-I used Jsoup to crawl through webpages for images and their source links.
-
-I used Javax Servlets to preform the HTTP requests needed to get results from the 
+Javax Servlets to preform the HTTP requests needed to get results from the 
 web crawl.
 
 For the front end, I used Javascript, HTML, and CSS. I used a bootstrap template for styling the page.
 
 
 ## Thought Process 
- I wanted my application to be 
+The purpose of the application is to be 
 able to find the logos found in a webpage and be able to tell what brands are being represented in these images. 
 This information can be valuable to companies, 
 as it can tell how visible their brand is to the general public.
-I hope in the future to get more information from the logos. such as the most prevalent brands in the webpage, as well as documenting trends over a series of webpages.
+
 
 
 ## Running the Project
@@ -58,15 +55,17 @@ To run the project, use the following command to start the server:
 
 You should see a line at the bottom that says "Started Jetty Server". 
 Now, if you enter `localhost:8080` into your browser, you should see the `index.html`
- welcome page! If all has gone well to this point, you're ready to begin!
+front page.
 
 
 
-## Important notes
+## Notes
 1. The test links are accessible in the UI of the project via a button click
    as well as the test-links.
 2. I used a text file stored in the root of the project to store the Google Cloud Vision API key. For security reasons, I have not included it in the project.
 The API can be inputed manually in the servlet code or stored in your own text file.
    
-
+## Things to improve on
+1. Add more statsitics based on the images gathered by the application i.e (Most frequent Brand, comparing brand placement with content of the webpage the image is in, etc)
+2. Search for specific company logos within a given webpage
 
