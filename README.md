@@ -34,10 +34,7 @@ Before beginning, make sure you have the following installed and ready to use
 - Maven 3.5 or higher
 - Java 8
 
-## Important notes
-1. I did not use the test class in the project
-2. If there are any issues in running the project, please let me know as soon as possible.
-My email is reach.aayushp@gmail.com
+
 
 ### Setup
 
@@ -68,5 +65,8 @@ Now, if you enter `localhost:8080` into your browser, you should see the `index.
 ## Important notes
 1. The test links are accessible in the UI of the project via a button click
    as well as the test-links.
+2. I used a text file stored in the root of the project to store the Google Cloud Vision API key. For security reasons, I have not included it in the project.
+The API can be inputed manually in the servlet code or stored in your own text file.
+   
 
 
