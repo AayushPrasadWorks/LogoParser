@@ -1,15 +1,15 @@
 ## Overview
- This application is designed to accept a url for a webpage and 
+ This application is designed to accept a URL for a webpage and 
  crawl the webpage for images, logos, and images that have a 
- possiblity of being logos.
+ possibility of being logos.
 
 ## Stack:
 
-Google's Cloud Vision API, a Machine Learing API, For Logo Detection
+Google's Cloud Vision API, a Machine Learning API, For Logo Detection
 
 Jsoup to crawl through webpages for images and their source links.
 
-Javax Servlets to preform the HTTP requests needed to get results from the 
+Java Servlets to perform the HTTP requests needed to get results from the 
 web crawl.
 
 For the front end, I used Javascript, HTML, and CSS. I used a bootstrap template for styling the page.
@@ -43,7 +43,7 @@ To start, open a terminal window and navigate to wherever you unzipped to the ro
 
 >`mvn package`
 
-If all goes well you should see some lines that ends with "BUILD SUCCESS". 
+If all goes well you should see some lines that end with "BUILD SUCCESS". 
 When you build your project, maven should build it in the `target` directory. 
 To clear this, you may run the command:
 
@@ -61,11 +61,11 @@ front page.
 
 ## Notes
 1. The test links are accessible in the UI of the project via a button click
-   as well as the test-links.
+   as well as the test links.
 2. I used a text file stored in the root of the project to store the Google Cloud Vision API key. For security reasons, I have not included it in the project.
 The API can be inputed manually in the servlet code or stored in your own text file.
    
 ## Things to improve on
-1. Add more statsitics based on the images gathered by the application i.e (Most frequent Brand, comparing brand placement with content of the webpage the image is in, etc)
+1. Add more statistics based on the images gathered by the application i.e (Most frequent Brand, comparing brand placement with the content of the webpage the image is in, etc)
 2. Search for specific company logos within a given webpage
 
